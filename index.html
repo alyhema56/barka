@@ -1,0 +1,1234 @@
+ <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>BARKA MARKET - Banfora</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* ===== PALETTE DE COULEURS (inspirée du logo) ===== */
+        :root {
+            --primary: #B8860B;      /* Or / Jaune foncé du logo */
+            --primary-dark: #8B6B0A; /* Or plus foncé */
+            --primary-light: #D4A520; /* Or clair */
+            --secondary: #1a1a2e;    /* Noir/bleu foncé du texte */
+            --accent: #C41E3A;       /* Rouge/terracotta du logo */
+            --bg-light: #f8f5f0;     /* Fond beige clair */
+            --white: #ffffff;
+            --shadow: rgba(184, 134, 11, 0.25);
+            --whatsapp: #25D366;
+        }
+
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--secondary);
+            padding-bottom: 80px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        /* ===== BADGE 24/7 ===== */
+        .badge-247 {
+            background: linear-gradient(90deg, var(--primary-dark), var(--primary));
+            color: #fff;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 0;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 12px var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .badge-247 i {
+            font-size: 14px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .badge-247 .dot {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            display: inline-block;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 28px;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 48px;
+            width: auto;
+            max-width: 150px;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+
+        .header-brand {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .header-brand .brand-name {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+        }
+
+        .header-brand .brand-sub {
+            font-size: 10px;
+            color: #6c757d;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-btn {
+            background: rgba(184, 134, 11, 0.12);
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--primary);
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.92);
+            background: rgba(184, 134, 11, 0.25);
+        }
+
+        /* ===== SIDEBAR MENU ===== */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 290px;
+            height: 100%;
+            background: #ffffff;
+            z-index: 201;
+            padding: 28px 20px;
+            transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 30px rgba(0,0,0,0.12);
+            overflow-y: auto;
+        }
+
+        .sidebar.open {
+            left: 0;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            float: right;
+            cursor: pointer;
+            color: #6c757d;
+            padding: 4px 8px;
+            transition: 0.3s;
+        }
+
+        .sidebar-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .sidebar-header img {
+            height: 40px;
+            width: auto;
+        }
+
+        .sidebar-header span {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f3f5;
+            font-size: 16px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .sidebar-nav li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: var(--secondary);
+            padding: 4px 0;
+        }
+
+        .sidebar-nav li a i {
+            width: 28px;
+            color: var(--primary);
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .sidebar-nav li:hover {
+            padding-left: 8px;
+        }
+
+        .sidebar-nav li:active {
+            background: #f1f3f5;
+            margin: 0 -20px;
+            padding-left: 20px;
+        }
+
+        /* ===== BANNIÈRE PROMO ===== */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            padding: 20px 16px;
+            margin: 16px 0 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 8px 25px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-banner::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -10px;
+            font-size: 60px;
+            opacity: 0.15;
+        }
+
+        .promo-banner::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: -10px;
+            font-size: 50px;
+            opacity: 0.12;
+        }
+
+        .promo-banner h2 {
+            font-size: 22px;
+            font-weight: 800;
+            position: relative;
+            z-index: 1;
+        }
+
+        .promo-banner p {
+            font-size: 14px;
+            opacity: 0.95;
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .promo-banner .promo-icon {
+            font-size: 28px;
+            position: relative;
+            z-index: 1;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* ===== RECHERCHE ===== */
+        .search-container {
+            margin: 12px 0 8px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 44px;
+            border-radius: 50px;
+            border: 2px solid #e9ecef;
+            font-size: 15px;
+            background: #fff;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(184, 134, 11, 0.15);
+        }
+
+        .search-wrapper {
+            position: relative;
+        }
+
+        .search-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 18px;
+        }
+
+        /* ===== FILTRES ===== */
+        .filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0 16px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            flex-wrap: nowrap;
+        }
+
+        .filters::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-btn {
+            flex-shrink: 0;
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 2px solid #dee2e6;
+            background: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+            color: #495057;
+            white-space: nowrap;
+        }
+
+        .filter-btn:active {
+            transform: scale(0.93);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px var(--shadow);
+        }
+
+        /* ===== SECTION PRODUITS ===== */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 20px 0 12px;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .section-title .count {
+            font-size: 14px;
+            color: #6c757d;
+            font-weight: 400;
+            margin-left: auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 14px 10px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            transform: scaleX(0);
+            transition: 0.3s;
+            border-radius: 0 0 16px 16px;
+        }
+
+        .product-card:active {
+            transform: scale(0.97);
+        }
+
+        .product-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
+        }
+
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+
+        .product-icon {
+            font-size: 30px;
+            color: var(--primary);
+            background: rgba(184, 134, 11, 0.10);
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .product-name {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 3px;
+            line-height: 1.3;
+            min-height: 36px;
+        }
+
+        .product-price {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+        }
+
+        .btn-order {
+            background: var(--whatsapp);
+            color: #fff;
+            border: none;
+            padding: 7px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-order:active {
+            transform: scale(0.92);
+        }
+
+        .btn-order i {
+            font-size: 15px;
+        }
+
+        .btn-order.pop {
+            animation: pop 0.3s ease;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            40% { transform: scale(0.85); }
+            70% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* ===== SECTION CONTACT ===== */
+        .contact-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px 16px;
+            margin: 24px 0;
+            border: 1px solid #edf2f7;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+        }
+
+        .contact-section h3 {
+            font-size: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary-dark);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f3f5;
+            transition: 0.2s;
+        }
+
+        .contact-item:last-child {
+            border-bottom: none;
+        }
+
+        .contact-item i {
+            width: 28px;
+            color: var(--primary);
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .contact-item a {
+            color: var(--primary-dark);
+            font-weight: 500;
+        }
+
+        .map-container {
+            margin-top: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+            height: 180px;
+            background: #e9ecef;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ===== WHATSAPP FLOTTANT ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--whatsapp);
+            color: #fff;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
+            z-index: 999;
+            transition: 0.25s;
+            border: none;
+            cursor: pointer;
+            animation: float 2.5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .whatsapp-float:active {
+            transform: scale(0.9);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: #ffffff;
+            padding: 20px 16px;
+            text-align: center;
+            font-size: 13px;
+            color: #6c757d;
+            border-top: 2px solid var(--primary);
+            margin-top: 20px;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .footer strong {
+            color: var(--primary-dark);
+        }
+
+        .footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 10px;
+        }
+
+        .footer .social-links a {
+            color: #6c757d;
+            font-size: 20px;
+            transition: 0.3s;
+        }
+
+        .footer .social-links a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 600px) {
+            .container {
+                max-width: 600px;
+            }
+            .product-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .product-image {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        @media (min-width: 900px) {
+            .container {
+                max-width: 900px;
+            }
+            .product-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+        }
+
+        /* ===== AFFICHAGE CATÉGORIE ===== */
+        .category-section {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .category-section.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Message "aucun résultat" */
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: #6c757d;
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 48px;
+            color: #dee2e6;
+            margin-bottom: 12px;
+        }
+
+        .no-results.show {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== BADGE 24/7 ===== -->
+    <div class="badge-247">
+        <span class="dot"></span>
+        <i class="fas fa-clock"></i> Ouvert 24h/24 &bull; 7j/7
+        <span class="dot"></span>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <div class="header-left">
+            <!-- Ton logo -->
+            <img src="image/logos.png" alt="BARKA MARKET" class="logo-img" 
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="header-brand" style="display:none;">
+                <span class="brand-name">BARKA</span>
+                <span class="brand-sub">MARKET</span>
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="menu-btn" id="menuToggle" aria-label="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== SIDEBAR ===== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <nav class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose">&times;</button>
+        <div class="sidebar-header">
+            <img src="image/logos.png" alt="BARKA MARKET" onerror="this.style.display='none'">
+            <span>BARKA MARKET</span>
+        </div>
+        <ul class="sidebar-nav">
+            <li><a href="#" data-filter="all"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="#" data-filter="maillots"><i class="fas fa-tshirt"></i> Maillots</a></li>
+            <li><a href="#" data-filter="chaussures"><i class="fas fa-shoe-prints"></i> Chaussures</a></li>
+            <li><a href="#" data-filter="voiles"><i class="fas fa-headscarf"></i> Voiles Femme</a></li>
+            <li><a href="#" data-filter="sacs"><i class="fas fa-bag-shopping"></i> Sacs & Accessoires</a></li>
+            <li><a href="#contact"><i class="fas fa-envelope"></i> Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <main class="container">
+
+        <!-- Bannière promo -->
+        <div class="promo-banner">
+            <span class="promo-icon"></span>
+            <h2>BARKA MARKET</h2>
+            <p>La qualité, c'est notre priorité</p>
+        </div>
+
+        <!-- Recherche -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-input" id="searchInput" placeholder="Rechercher un produit...">
+            </div>
+        </div>
+
+        <!-- Filtres -->
+        <div class="filters" id="filterContainer">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="maillots">Maillots</button>
+            <button class="filter-btn" data-filter="chaussures">Chaussures</button>
+            <button class="filter-btn" data-filter="voiles">Voiles</button>
+            <button class="filter-btn" data-filter="sacs">Sacs & Acc.</button>
+        </div>
+
+        <!-- ===== LISTE DES PRODUITS ===== -->
+        <div id="productContainer">
+
+            <!-- CATÉGORIE : MAILLOTS -->
+            <div class="category-section" data-category="maillots">
+                <div class="section-title">
+                    <i class="fas fa-tshirt"></i> Maillots de foot simples
+                    <span class="count">5 produits</span>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/B8860B/fff?text=BM" alt="Bayern Munich" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Bayern Munich</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Maillot Bayern Munich" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/B8860B/fff?text=RM" alt="Real Madrid" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Real Madrid</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Maillot Real Madrid" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/B8860B/fff?text=FCB" alt="FC Barcelone" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot FC Barcelone</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Maillot FC Barcelone" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/B8860B/fff?text=ACM" alt="AC Milan" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot AC Milan</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/B8860B/fff?text=PSG" alt="PSG" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot PSG</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Maillot PSG" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE : CHAUSSURES FEMME -->
+            <div class="category-section" data-category="chaussures">
+                <div class="section-title">
+                    <i class="fas fa-shoe-prints"></i> Chaussures Femme
+                    <span class="count">9 produits</span>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SP" alt="Sandales Plates" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Sandales Plates Femme</div>
+                        <div class="product-price">8 000 FCFA</div>
+                        <button class="btn-order" data-name="Sandales Plates Femme" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SC" alt="Sandales Compensées" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Sandales Compensées</div>
+                        <div class="product-price">8 000 FCFA</div>
+                        <button class="btn-order" data-name="Sandales Compensées" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SM" alt="Sandales Mode" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Sandales Mode</div>
+                        <div class="product-price">8 000 FCFA</div>
+                        <button class="btn-order" data-name="Sandales Mode" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=MF" alt="Mules Femme" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Mules Femme</div>
+                        <div class="product-price">8 000 FCFA</div>
+                        <button class="btn-order" data-name="Mules Femme" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=TC" alt="Tongs Chic" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Tongs Chic</div>
+                        <div class="product-price">8 000 FCFA</div>
+                        <button class="btn-order" data-name="Tongs Chic" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SO" alt="Sandales Ouvertes" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Sandales Ouvertes</div>
+                        <div class="product-price">8 000 FCFA</div>
+                        <button class="btn-order" data-name="Sandales Ouvertes" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=TA" alt="Talons Aiguilles" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Talons Aiguilles Soirée</div>
+                        <div class="product-price">18 000 FCFA</div>
+                        <button class="btn-order" data-name="Talons Aiguilles Soirée" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=EE" alt="Escarpins" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Escarpins Élégants</div>
+                        <div class="product-price">18 000 FCFA</div>
+                        <button class="btn-order" data-name="Escarpins Élégants" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/C41E3A/fff?text=TF" alt="Talons Fête" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
+                        <div class="product-name">Talons Fête Femme</div>
+                        <div class="product-price">18 000 FCFA</div>
+                        <button class="btn-order" data-name="Talons Fête Femme" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE : VOILES FEMME MUSULMANE -->
+            <div class="category-section" data-category="voiles">
+                <div class="section-title">
+                    <i class="fas fa-headscarf"></i> Voiles Femme Musulmane
+                    <span class="count">3 produits</span>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/6f42c1/fff?text=VH" alt="Voile Hijab" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
+                        <div class="product-name">Voile Hijab</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Voile Hijab" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/6f42c1/fff?text=CF" alt="Chaussons Femme" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
+                        <div class="product-name">Chaussons Femme Musulmane</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Chaussons Femme Musulmane" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/6f42c1/fff?text=BE" alt="Babouches" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
+                        <div class="product-name">Babouches Élégantes</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Babouches Élégantes" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE : SACS & ACCESSOIRES -->
+            <div class="category-section" data-category="sacs">
+                <div class="section-title">
+                    <i class="fas fa-bag-shopping"></i> Sacs & Accessoires
+                    <span class="count">7 produits</span>
+                </div>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/f39c12/fff?text=SM" alt="Sacs à Main" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
+                        <div class="product-name">Sacs à Main Tendance</div>
+                        <div class="product-price">15 000 FCFA</div>
+                        <button class="btn-order" data-name="Sacs à Main Tendance" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/f39c12/fff?text=SB" alt="Sacs Bandoulière" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
+                        <div class="product-name">Sacs Bandoulière</div>
+                        <div class="product-price">15 000 FCFA</div>
+                        <button class="btn-order" data-name="Sacs Bandoulière" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/f39c12/fff?text=SC" alt="Sacs Chic" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
+                        <div class="product-name">Sacs Chic Femme</div>
+                        <div class="product-price">15 000 FCFA</div>
+                        <button class="btn-order" data-name="Sacs Chic Femme" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/f39c12/fff?text=PF" alt="Portefeuilles" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-wallet"></i></div>
+                        <div class="product-name">Portefeuilles Femme</div>
+                        <div class="product-price">7 000 FCFA</div>
+                        <button class="btn-order" data-name="Portefeuilles Femme" data-price="7 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/f39c12/fff?text=CF" alt="Ceintures" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-belt"></i></div>
+                        <div class="product-name">Ceintures Femme</div>
+                        <div class="product-price">4 000 FCFA</div>
+                        <button class="btn-order" data-name="Ceintures Femme" data-price="4 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/f39c12/fff?text=LS" alt="Lunettes" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-glasses"></i></div>
+                        <div class="product-name">Lunettes de Soleil</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Lunettes de Soleil" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                    <div class="product-card">
+                        <img src="https://placehold.co/80x80/f39c12/fff?text=BF" alt="Bijoux" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-gem"></i></div>
+                        <div class="product-name">Bijoux Fantaisie</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <button class="btn-order" data-name="Bijoux Fantaisie" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Message aucun résultat -->
+        <div class="no-results" id="noResults">
+            <i class="fas fa-search"></i>
+            <p>Aucun produit trouvé</p>
+        </div>
+
+        <!-- ===== CONTACT ===== -->
+        <section class="contact-section" id="contact">
+            <h3><i class="fas fa-address-card"></i> Contactez-nous</h3>
+            <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <a href="tel:+22605536078">05 53 60 78</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:carteursoulby.0553@gmail.com">carteursoulby.0553@gmail.com</a>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Banfora, Secteur 15, Région des Tannounyan</span>
+            </div>
+            <div class="map-container">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.103694623757!2d-4.754276284231317!3d10.63037899229265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfb0c8f3d2b4d9f7%3A0x2c7f8a3e4b5c6d7e!2sBanfora%2C%20Burkina%20Faso!5e0!3m2!1sfr!2sfr!4v1700000000000" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <strong>BARKA MARKET</strong> &bull; Banfora, Secteur 15 <br>
+        Ouvert <strong>24h/24</strong> &bull; 7j/7 <br>
+        <div class="social-links">
+            <a href="https://wa.me/22605536078?text=Bonjour%20BARKA%20MARKET%2C%20j%27ai%20une%20question" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="mailto:carteursoulby.0553@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+22605536078" aria-label="Téléphone"><i class="fas fa-phone"></i></a>
+        </div>
+        &copy; 2026 Tous droits réservés
+    </footer>
+
+    <!-- ===== WHATSAPP FLOTTANT (sans badge) ===== -->
+    <a href="https://wa.me/22605536078?text=Bonjour%20BARKA%20MARKET%2C%20j%27ai%20une%20question" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Nous contacter sur WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ---------- MENU HAMBURGER ----------
+            const menuBtn = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            const closeBtn = document.getElementById('sidebarClose');
+
+            function openMenu() {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeMenu() {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+
+            menuBtn.addEventListener('click', openMenu);
+            closeBtn.addEventListener('click', closeMenu);
+            overlay.addEventListener('click', closeMenu);
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeMenu();
+            });
+
+            // Navigation depuis le menu
+            document.querySelectorAll('.sidebar-nav a[data-filter]').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const filter = this.dataset.filter;
+                    applyFilter(filter);
+                    closeMenu();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            });
+
+            document.querySelector('.sidebar-nav a[href="#contact"]').addEventListener('click', function(e) {
+                e.preventDefault();
+                closeMenu();
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // ---------- FILTRES ----------
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const categorySections = document.querySelectorAll('.category-section');
+            const searchInput = document.getElementById('searchInput');
+            const noResults = document.getElementById('noResults');
+
+            function applyFilter(filter) {
+                filterBtns.forEach(function(btn) {
+                    btn.classList.remove('active');
+                    if (btn.dataset.filter === filter) {
+                        btn.classList.add('active');
+                    }
+                });
+
+                let hasVisible = false;
+                categorySections.forEach(function(section) {
+                    const cat = section.dataset.category;
+                    if (filter === 'all' || filter === cat) {
+                        section.classList.remove('hidden');
+                        hasVisible = true;
+                    } else {
+                        section.classList.add('hidden');
+                    }
+                });
+
+                if (searchInput.value.trim() !== '') {
+                    filterProducts(searchInput.value.trim());
+                }
+
+                return hasVisible;
+            }
+
+            // ---------- RECHERCHE ----------
+            function filterProducts(query) {
+                const allCards = document.querySelectorAll('.product-card');
+                let visibleCount = 0;
+
+                allCards.forEach(function(card) {
+                    const name = card.querySelector('.product-name').textContent.toLowerCase();
+                    const isVisible = name.includes(query.toLowerCase());
+                    card.style.display = isVisible ? 'flex' : 'none';
+                    if (isVisible) visibleCount++;
+                });
+
+                const hiddenSections = document.querySelectorAll('.category-section.hidden');
+                hiddenSections.forEach(function(section) {
+                    section.style.display = 'none';
+                });
+
+                if (visibleCount === 0) {
+                    noResults.classList.add('show');
+                } else {
+                    noResults.classList.remove('show');
+                }
+            }
+
+            searchInput.addEventListener('input', function() {
+                const query = this.value.trim();
+                const allCards = document.querySelectorAll('.product-card');
+                allCards.forEach(function(card) {
+                    card.style.display = 'flex';
+                });
+
+                if (query !== '') {
+                    filterProducts(query);
+                } else {
+                    noResults.classList.remove('show');
+                    const activeFilter = document.querySelector('.filter-btn.active');
+                    if (activeFilter) {
+                        applyFilter(activeFilter.dataset.filter);
+                    }
+                }
+            });
+
+            filterBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    const filter = this.dataset.filter;
+                    searchInput.value = '';
+                    noResults.classList.remove('show');
+                    document.querySelectorAll('.product-card').forEach(function(card) {
+                        card.style.display = 'flex';
+                    });
+                    applyFilter(filter);
+                });
+            });
+
+            // ---------- BOUTONS COMMANDER (WhatsApp) ----------
+            const orderBtns = document.querySelectorAll('.btn-order');
+
+            orderBtns.forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    e.preventDefault();
+
+                    this.classList.remove('pop');
+                    void this.offsetWidth;
+                    this.classList.add('pop');
+
+                    const name = this.dataset.name;
+                    const price = this.dataset.price;
+                    const phone = '22605536078';
+                    const message = 'Bonjour BARKA MARKET, je souhaite commander ' + name + ' au prix de ' + price;
+                    const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+                    
+                    window.open(url, '_blank');
+                });
+            });
+
+            // ---------- INITIALISATION ----------
+            applyFilter('all');
+
+        })();
+    </script>
+
+</body>
+</html>
