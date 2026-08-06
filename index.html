@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -6,7 +6,6 @@
     <title>BARAKA MARKET - Banfora</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== PALETTE DE COULEURS ===== */
         :root {
             --primary: #c79408;
             --primary-dark: #5a4508;
@@ -19,7 +18,6 @@
             --whatsapp: #25D366;
         }
 
-        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -48,7 +46,6 @@
             padding: 0 16px;
         }
 
-        /* ===== BADGE 24/7 ===== */
         .badge-247 {
             background: linear-gradient(90deg, var(--primary-dark), var(--primary));
             color: #fff;
@@ -91,7 +88,6 @@
             50% { opacity: 0.2; }
         }
 
-        /* ===== HEADER ===== */
         .header {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
@@ -155,7 +151,7 @@
         .menu-btn {
             background: rgba(184, 134, 11, 0.12);
             border: none;
-            font-size: 22px;
+            font-size: 24px;
             cursor: pointer;
             color: var(--primary);
             padding: 8px 12px;
@@ -171,7 +167,6 @@
             background: rgba(184, 134, 11, 0.25);
         }
 
-        /* ===== SIDEBAR MENU ===== */
         .sidebar-overlay {
             position: fixed;
             top: 0;
@@ -281,7 +276,6 @@
             padding-left: 20px;
         }
 
-        /* ===== BANNIÈRE PROMO ===== */
         .promo-banner {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
             color: #fff;
@@ -317,7 +311,6 @@
             margin-bottom: 4px;
         }
 
-        /* ===== RECHERCHE ===== */
         .search-container {
             margin: 12px 0 8px;
         }
@@ -351,7 +344,6 @@
             font-size: 18px;
         }
 
-        /* ===== FILTRES ===== */
         .filters {
             display: flex;
             gap: 8px;
@@ -391,7 +383,6 @@
             box-shadow: 0 4px 12px var(--shadow);
         }
 
-        /* ===== SECTION PRODUITS ===== */
         .section-title {
             font-size: 20px;
             font-weight: 700;
@@ -561,7 +552,6 @@
             100% { transform: scale(1); }
         }
 
-        /* ===== MODAL / ZOOM PRODUIT ===== */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -681,7 +671,6 @@
             font-size: 20px;
         }
 
-        /* ===== SECTION CONTACT ===== */
         .contact-section {
             background: #ffffff;
             border-radius: 20px;
@@ -739,7 +728,6 @@
             border: 0;
         }
 
-        /* ===== WHATSAPP FLOTTANT ===== */
         .whatsapp-float {
             position: fixed;
             bottom: 24px;
@@ -770,7 +758,6 @@
             transform: scale(0.9);
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             background: #ffffff;
             padding: 20px 16px;
@@ -804,7 +791,6 @@
             transform: translateY(-2px);
         }
 
-        /* ===== RESPONSIVE ===== */
         @media (min-width: 600px) {
             .container {
                 max-width: 600px;
@@ -830,7 +816,6 @@
             }
         }
 
-        /* ===== AFFICHAGE CATÉGORIE ===== */
         .category-section {
             display: block;
             animation: fadeIn 0.4s ease;
@@ -869,20 +854,14 @@
 </head>
 <body>
 
-    <!-- ===== BADGE 24/7 ===== -->
     <div class="badge-247">
         <span class="dot"></span>
         <i class="fas fa-clock"></i> Ouvert 24h/24 &bull; 7j/7
         <span class="dot"></span>
     </div>
 
-    <!-- ===== HEADER ===== -->
     <header class="header">
         <div class="header-left">
-            <button class="menu-btn" id="menuToggle" aria-label="Ouvrir le menu">
-                <i class="fas fa-bars"></i>
-            </button>
-            <!-- Ton logo -->
             <img src="image/logos.png" alt="BARAKA MARKET" class="logo-img" 
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             <div class="header-brand" style="display:none;">
@@ -891,11 +870,12 @@
             </div>
         </div>
         <div class="header-right">
-            <!-- Espace pour future icône -->
+            <button class="menu-btn" id="menuToggle" aria-label="Ouvrir le menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
-    <!-- ===== SIDEBAR ===== -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <nav class="sidebar" id="sidebar">
         <button class="sidebar-close" id="sidebarClose">&times;</button>
@@ -913,17 +893,14 @@
         </ul>
     </nav>
 
-    <!-- ===== MAIN CONTENT ===== -->
     <main class="container">
 
-        <!-- Bannière promo -->
         <div class="promo-banner">
             <span class="promo-icon"></span>
             <h2>BARAKA MARKET</h2>
-            <p>La qualité, c'est notre priorité</p>
+            <p>La qualite, c'est notre priorite</p>
         </div>
 
-        <!-- Recherche -->
         <div class="search-container">
             <div class="search-wrapper">
                 <i class="fas fa-search"></i>
@@ -931,7 +908,6 @@
             </div>
         </div>
 
-        <!-- Filtres -->
         <div class="filters" id="filterContainer">
             <button class="filter-btn active" data-filter="all">Tous</button>
             <button class="filter-btn" data-filter="maillots">Maillots</button>
@@ -940,10 +916,8 @@
             <button class="filter-btn" data-filter="sacs">Sacs & Acc.</button>
         </div>
 
-        <!-- ===== LISTE DES PRODUITS ===== -->
         <div id="productContainer">
 
-            <!-- CATÉGORIE : MAILLOTS -->
             <div class="category-section" data-category="maillots">
                 <div class="section-title">
                     <i class="fas fa-tshirt"></i> Maillots de foot simples
@@ -955,7 +929,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Bayern Munich</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Bayern Munich" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     
@@ -964,7 +938,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Real Madrid</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Real Madrid" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -973,7 +947,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot FC Barcelone</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot FC Barcelone" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -982,7 +956,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot AC Milan</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -991,7 +965,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Italie</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Italie" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1000,7 +974,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Argentine Exterieur</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Argentine Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1009,7 +983,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Argentine Domicile</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Argentine Domicile" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1018,7 +992,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Colombien</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Colombien" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1027,7 +1001,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Mexique</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Mexique" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1036,7 +1010,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Barça Exterieur</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Barça Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1045,7 +1019,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Portugal Domicile</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Portugal Domicile" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1054,7 +1028,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Portugal Exterieur</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Portugal Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1063,7 +1037,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Brésil</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Brésil" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1072,7 +1046,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Norvège</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Norvège" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1081,7 +1055,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Liverpool</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Liverpool" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1090,7 +1064,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Arsenal</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Arsenal" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1099,7 +1073,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Ivoirien Exterieur</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Ivoirien Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1108,7 +1082,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot France</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot France" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1117,7 +1091,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Ivoirien Domicile</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Ivoirien Domicile" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1126,7 +1100,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot All</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot All" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1135,7 +1109,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Suisse</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Suisse" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1144,7 +1118,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Belge</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot Belge" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
 
@@ -1153,13 +1127,12 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot PSG</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Maillot PSG" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
             </div>
 
-            <!-- CATÉGORIE : CHAUSSURES FEMME -->
             <div class="category-section" data-category="chaussures">
                 <div class="section-title">
                     <i class="fas fa-shoe-prints"></i> Chaussures Femme
@@ -1171,7 +1144,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Plates Femme</div>
                         <div class="product-price">8 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Sandales Plates Femme" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Sandales Compensées" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Compensées">
@@ -1179,7 +1152,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Compensées</div>
                         <div class="product-price">8 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Sandales Compensées" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Sandales Mode" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Mode">
@@ -1187,7 +1160,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Mode</div>
                         <div class="product-price">8 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Sandales Mode" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Mules Femme" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Mules+Femme">
@@ -1195,7 +1168,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Mules Femme</div>
                         <div class="product-price">8 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Mules Femme" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Tongs Chic" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Tongs+Chic">
@@ -1203,7 +1176,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Tongs Chic</div>
                         <div class="product-price">8 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Tongs Chic" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Sandales Ouvertes" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Ouvertes">
@@ -1211,7 +1184,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Ouvertes</div>
                         <div class="product-price">8 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Sandales Ouvertes" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Talons Aiguilles Soirée" data-price="18 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Talons+Aiguilles">
@@ -1219,7 +1192,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Talons Aiguilles Soirée</div>
                         <div class="product-price">18 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Talons Aiguilles Soirée" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Escarpins Élégants" data-price="18 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Escarpins">
@@ -1227,7 +1200,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Escarpins Élégants</div>
                         <div class="product-price">18 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Escarpins Élégants" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Talons Fête Femme" data-price="18 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Talons+Fête">
@@ -1235,13 +1208,12 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Talons Fête Femme</div>
                         <div class="product-price">18 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Talons Fête Femme" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
             </div>
 
-            <!-- CATÉGORIE : VOILES FEMME MUSULMANE -->
             <div class="category-section" data-category="voiles">
                 <div class="section-title">
                     <i class="fas fa-headscarf"></i> Voiles Femme Musulmane
@@ -1253,7 +1225,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
                         <div class="product-name">Voile Hijab</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Voile Hijab" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Chaussons Femme Musulmane" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/6f42c1/fff?text=Chaussons">
@@ -1261,7 +1233,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
                         <div class="product-name">Chaussons Femme Musulmane</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Chaussons Femme Musulmane" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Babouches Élégantes" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/6f42c1/fff?text=Babouches">
@@ -1269,13 +1241,12 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
                         <div class="product-name">Babouches Élégantes</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Babouches Élégantes" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
             </div>
 
-            <!-- CATÉGORIE : SACS & ACCESSOIRES -->
             <div class="category-section" data-category="sacs">
                 <div class="section-title">
                     <i class="fas fa-bag-shopping"></i> Sacs & Accessoires
@@ -1287,7 +1258,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
                         <div class="product-name">Sacs à Main Tendance</div>
                         <div class="product-price">15 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Sacs à Main Tendance" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Sacs Bandoulière" data-price="15 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Bandoulière">
@@ -1295,7 +1266,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
                         <div class="product-name">Sacs Bandoulière</div>
                         <div class="product-price">15 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Sacs Bandoulière" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Sacs Chic Femme" data-price="15 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Sacs+Chic">
@@ -1303,7 +1274,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
                         <div class="product-name">Sacs Chic Femme</div>
                         <div class="product-price">15 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Sacs Chic Femme" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Portefeuilles Femme" data-price="7 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Portefeuilles">
@@ -1311,7 +1282,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-wallet"></i></div>
                         <div class="product-name">Portefeuilles Femme</div>
                         <div class="product-price">7 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Portefeuilles Femme" data-price="7 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Ceintures Femme" data-price="4 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Ceintures">
@@ -1319,7 +1290,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-belt"></i></div>
                         <div class="product-name">Ceintures Femme</div>
                         <div class="product-price">4 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Ceintures Femme" data-price="4 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Lunettes de Soleil" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Lunettes">
@@ -1327,7 +1298,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-glasses"></i></div>
                         <div class="product-name">Lunettes de Soleil</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Lunettes de Soleil" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                     <div class="product-card" data-name="Bijoux Fantaisie" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Bijoux">
@@ -1335,7 +1306,7 @@
                         <div class="product-icon" style="display:none;"><i class="fas fa-gem"></i></div>
                         <div class="product-name">Bijoux Fantaisie</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <span class="click-hint"></span>
+                        <span class="click-hint">Voir</span>
                         <button class="btn-order" data-name="Bijoux Fantaisie" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
@@ -1343,13 +1314,11 @@
 
         </div>
 
-        <!-- Message aucun résultat -->
         <div class="no-results" id="noResults">
             <i class="fas fa-search"></i>
-            <p>Aucun produit trouvé</p>
+            <p>Aucun produit trouve</p>
         </div>
 
-        <!-- ===== CONTACT ===== -->
         <section class="contact-section" id="contact">
             <h3><i class="fas fa-address-card"></i> Contactez-nous</h3>
             <div class="contact-item">
@@ -1362,7 +1331,7 @@
             </div>
             <div class="contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>Banfora, Secteur 15, Région des Tannounyan</span>
+                <span>Banfora, Secteur 15, Region des Tannounyan</span>
             </div>
             <div class="map-container">
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.103694623757!2d-4.754276284231317!3d10.63037899229265!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xfb0c8f3d2b4d9f7%3A0x2c7f8a3e4b5c6d7e!2sBanfora%2C%20Burkina%20Faso!5e0!3m2!1sfr!2sfr!4v1700000000000" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -1371,19 +1340,17 @@
 
     </main>
 
-    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <strong>BARAKA MARKET</strong> &bull; Banfora, Secteur 15 <br>
         Ouvert <strong>24h/24</strong> &bull; 7j/7 <br>
         <div class="social-links">
             <a href="https://wa.me/22605536078?text=Bonjour%20BARAKA%20MARKET%2C%20j%27ai%20une%20question" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
             <a href="mailto:carteursoulby.0553@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            <a href="tel:+22605536078" aria-label="Téléphone"><i class="fas fa-phone"></i></a>
+            <a href="tel:+22605536078" aria-label="Telephone"><i class="fas fa-phone"></i></a>
         </div>
-        &copy; 2026 Tous droits réservés
+        &copy; 2026 Tous droits reserves
     </footer>
 
-    <!-- ===== WHATSAPP FLOTTANT ===== -->
     <a href="https://wa.me/22605536078?text=Bonjour%20BARAKA%20MARKET%2C%20j%27ai%20une%20question" 
        class="whatsapp-float" 
        target="_blank" 
@@ -1392,7 +1359,6 @@
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- ===== MODAL / ZOOM PRODUIT ===== -->
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <button class="modal-close" id="modalClose">&times;</button>
@@ -1406,12 +1372,10 @@
         </div>
     </div>
 
-    <!-- ===== JAVASCRIPT ===== -->
     <script>
         (function() {
             'use strict';
 
-            // ---------- MENU HAMBURGER ----------
             const menuBtn = document.getElementById('menuToggle');
             const sidebar = document.getElementById('sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -1453,7 +1417,6 @@
                 document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
             });
 
-            // ---------- FILTRES ----------
             const filterBtns = document.querySelectorAll('.filter-btn');
             const categorySections = document.querySelectorAll('.category-section');
             const searchInput = document.getElementById('searchInput');
@@ -1485,7 +1448,6 @@
                 return hasVisible;
             }
 
-            // ---------- RECHERCHE ----------
             function filterProducts(query) {
                 const allCards = document.querySelectorAll('.product-card');
                 let visibleCount = 0;
@@ -1539,7 +1501,6 @@
                 });
             });
 
-            // ---------- MODAL / ZOOM PRODUIT ----------
             const modal = document.getElementById('productModal');
             const modalImage = document.getElementById('modalImage');
             const modalName = document.getElementById('modalName');
@@ -1567,10 +1528,8 @@
                 document.body.classList.remove('modal-open');
             }
 
-            // Cliquer sur une carte produit
             document.querySelectorAll('.product-card').forEach(function(card) {
                 card.addEventListener('click', function(e) {
-                    // Éviter de déclencher si on clique sur le bouton commander
                     if (e.target.closest('.btn-order')) return;
                     
                     const data = {
@@ -1582,7 +1541,6 @@
                 });
             });
 
-            // Fermer la modal
             modalClose.addEventListener('click', closeModal);
             modal.addEventListener('click', function(e) {
                 if (e.target === this) closeModal();
@@ -1592,7 +1550,6 @@
                 if (e.key === 'Escape') closeModal();
             });
 
-            // Bouton commander dans la modal
             modalOrderBtn.addEventListener('click', function(e) {
                 const name = this.dataset.name;
                 const price = this.dataset.price;
@@ -1603,7 +1560,6 @@
                 closeModal();
             });
 
-            // ---------- BOUTONS COMMANDER (dans les cartes) ----------
             const orderBtns = document.querySelectorAll('.btn-order');
 
             orderBtns.forEach(function(btn) {
@@ -1625,7 +1581,6 @@
                 });
             });
 
-            // ---------- INITIALISATION ----------
             applyFilter('all');
 
         })();
