@@ -189,26 +189,26 @@
         .sidebar {
             position: fixed;
             top: 0;
-            left: -300px;
+            right: -300px;
             width: 290px;
             height: 100%;
             background: #ffffff;
             z-index: 201;
             padding: 28px 20px;
             transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 4px 0 30px rgba(0,0,0,0.12);
+            box-shadow: -4px 0 30px rgba(0,0,0,0.12);
             overflow-y: auto;
         }
 
         .sidebar.open {
-            left: 0;
+            right: 0;
         }
 
         .sidebar-close {
             background: none;
             border: none;
             font-size: 28px;
-            float: right;
+            float: left;
             cursor: pointer;
             color: #6c757d;
             padding: 4px 8px;
