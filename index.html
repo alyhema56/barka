@@ -6,17 +6,17 @@
     <title>BARAKA MARKET - Banfora</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        /* ===== PALETTE DE COULEURS (inspirée du logo) ===== */
+        /* ===== PALETTE DE COULEURS ===== */
         :root {
-            --primary: #c79408;      /* Or / Jaune foncé du logo */
-            --primary-dark: #5a4508; /* Or plus foncé */
-            --primary-light: #D4A520; /* Or clair */
-            --secondary: #1a1a2e;    /* Noir/bleu foncé du texte */
-            --accent: #C41E3A;       /* Rouge/terracotta du logo */
-            --bg-light: #f8f5f0;     /* Fond beige clair */
+            --primary: #c79408;
+            --primary-dark: #5a4508;
+            --primary-light: #D4A520;
+            --secondary: #1a1a2e;
+            --accent: #C41E3A;
+            --bg-light: #f8f5f0;
             --white: #ffffff;
             --shadow: rgba(184, 134, 11, 0.25);
-            --whatsapp: #7ba506ee;
+            --whatsapp: #25D366;
         }
 
         /* ===== RESET & BASE ===== */
@@ -294,24 +294,6 @@
             overflow: hidden;
         }
 
-        .promo-banner::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            right: -10px;
-            font-size: 60px;
-            opacity: 0.15;
-        }
-
-        .promo-banner::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: -10px;
-            font-size: 50px;
-            opacity: 0.12;
-        }
-
         .promo-banner h2 {
             font-size: 22px;
             font-weight: 800;
@@ -452,6 +434,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .product-card::after {
@@ -475,6 +458,24 @@
             transform: scaleX(1);
         }
 
+        .product-card .click-hint {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 10px;
+            color: #6c757d;
+            background: rgba(255,255,255,0.9);
+            padding: 2px 8px;
+            border-radius: 50px;
+            opacity: 0;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+
+        .product-card:hover .click-hint {
+            opacity: 1;
+        }
+
         .product-image {
             width: 80px;
             height: 80px;
@@ -484,6 +485,7 @@
             background: #f8f9fa;
             border: 1px solid #edf2f7;
             transition: 0.3s;
+            pointer-events: none;
         }
 
         .product-image:hover {
@@ -501,6 +503,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 8px;
+            pointer-events: none;
         }
 
         .product-name {
@@ -509,6 +512,7 @@
             margin-bottom: 3px;
             line-height: 1.3;
             min-height: 36px;
+            pointer-events: none;
         }
 
         .product-price {
@@ -516,6 +520,7 @@
             font-weight: 700;
             color: var(--primary-dark);
             margin-bottom: 8px;
+            pointer-events: none;
         }
 
         .btn-order {
@@ -533,6 +538,8 @@
             gap: 6px;
             width: 100%;
             justify-content: center;
+            position: relative;
+            z-index: 2;
         }
 
         .btn-order:active {
@@ -552,6 +559,126 @@
             40% { transform: scale(0.85); }
             70% { transform: scale(1.05); }
             100% { transform: scale(1); }
+        }
+
+        /* ===== MODAL / ZOOM PRODUIT ===== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.35s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 24px;
+            max-width: 400px;
+            width: 100%;
+            padding: 28px 24px 24px;
+            position: relative;
+            transform: scale(0.9) translateY(20px);
+            transition: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #6c757d;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .modal-close:hover {
+            background: #f1f3f5;
+            transform: rotate(90deg);
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            background: #f8f9fa;
+            border: 1px solid #edf2f7;
+        }
+
+        .modal-name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 6px;
+        }
+
+        .modal-price {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-dark);
+            margin-bottom: 16px;
+        }
+
+        .modal-divider {
+            width: 60px;
+            height: 3px;
+            background: var(--primary);
+            margin: 0 auto 16px;
+            border-radius: 4px;
+        }
+
+        .modal-btn-order {
+            background: var(--whatsapp);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .modal-btn-order:active {
+            transform: scale(0.95);
+        }
+
+        .modal-btn-order i {
+            font-size: 20px;
         }
 
         /* ===== SECTION CONTACT ===== */
@@ -689,6 +816,9 @@
                 width: 100px;
                 height: 100px;
             }
+            .modal-content {
+                max-width: 450px;
+            }
         }
 
         @media (min-width: 900px) {
@@ -715,7 +845,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Message "aucun résultat" */
         .no-results {
             text-align: center;
             padding: 40px 20px;
@@ -731,6 +860,10 @@
 
         .no-results.show {
             display: block;
+        }
+
+        body.modal-open {
+            overflow: hidden;
         }
     </style>
 </head>
@@ -749,8 +882,6 @@
             <button class="menu-btn" id="menuToggle" aria-label="Ouvrir le menu">
                 <i class="fas fa-bars"></i>
             </button>
-        </div>
-        <div class="header-left">
             <!-- Ton logo -->
             <img src="image/logos.png" alt="BARAKA MARKET" class="logo-img" 
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
@@ -759,7 +890,9 @@
                 <span class="brand-sub">MARKET</span>
             </div>
         </div>
-        
+        <div class="header-right">
+            <!-- Espace pour future icône -->
+        </div>
     </header>
 
     <!-- ===== SIDEBAR ===== -->
@@ -817,171 +950,210 @@
                     <span class="count">5 produits</span>
                 </div>
                 <div class="product-grid">
-                    <div class="product-card">
-                       
+                    <div class="product-card" data-name="Maillot Bayern Munich" data-price="5 000 FCFA" data-img="image/maillot bayern.webp">
                         <img src="image/maillot bayern.webp" alt="Bayern Munich" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Bayern Munich</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Maillot Bayern Munich" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
+                    
+                    <div class="product-card" data-name="Maillot Real Madrid" data-price="5 000 FCFA" data-img="image/Réal.jfif">
                         <img src="image/Réal.jfif" alt="Real Madrid" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot Real Madrid</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Maillot Real Madrid" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
+
+                    <div class="product-card" data-name="Maillot FC Barcelone" data-price="5 000 FCFA" data-img="image/Barça.webp">
                         <img src="image/Barça.webp" alt="FC Barcelone" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                       
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot FC Barcelone</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Maillot FC Barcelone" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
+
+                    <div class="product-card" data-name="Maillot AC Milan" data-price="5 000 FCFA" data-img="image/ac milan.jpg">
                         <img src="image/ac milan.jpg" alt="AC Milan" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
                         <div class="product-name">Maillot AC Milan</div>
                         <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                        
-                          <div class="product-card">
-                        <img src="image/Maillot _Italy.png" alt="Italie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot à l'exterieur</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                          <div class="product-card">
-                        <img src="image/maillot _Argentine.png" alt="Argentine" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot Argentin à l'exterieur</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/Maillot domicile _Argentine.png" alt="Argentine" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot Argentin_domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/maillot _colombie.png.png" alt="Colombie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot Colombien_domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                    <div class="product-card">
-                        <img src="image/Maillot _Mexique.png" alt="Mexique" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot de la Mexique domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/Maillot Barça.png.png" alt="Barcelone" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot Barça exterieur-domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot Barcelone" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/maillot domicile _Portugal.png" alt="Portugal" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot de Portugal domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot Portugais" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/Maillot_Portugal.png" alt="Portugal" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot de Portugal_exterieur</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot Portugais" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/maillot Brésilien.png" alt="Bresil" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot du Bresil_exterieur</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot bresil" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/maillot Norvège.png" alt="Norvège" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot de la Norvège domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Norvège" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/Maillot Liverpool FC.png" alt="Liverpool" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot de Liverpool exterieur</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot Liverpool" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/Maillot Arsenal.png" alt="Arsenal" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot de Arsenal domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot Arsenal" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/maillot CI.png" alt="CI" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot ivoirien exterieur</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot ivoirien" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/maillot domicile _France.png" alt="France" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot France_domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot France" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                    <div class="product-card">
-                        <img src="image/maillot_CI.png" alt="CI" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot Ivoirien_domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot ivoire" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/Maillot _All_Musuala.png" alt="All" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot All domicile</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot All" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                         <div class="product-card">
-                        <img src="image/maillot Suisse.png" alt="Suisse" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot de la Suisse</div>
-                        <div class="product-price">5 000 FCFA</div>
-                        <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
-                         </div>
-                    <div class="product-card">
-                        <img src="image/Maillot _Belge.png" alt="Belgique" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot Belge rouge</div>
-                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Maillot AC Milan" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                     <div class="product-card">
-                        
-                    <div class="product-card">
+
+                    <div class="product-card" data-name="Maillot Italie" data-price="5 000 FCFA" data-img="image/Maillot _Italy.png">
+                        <img src="image/Maillot _Italy.png" alt="Italie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Italie</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Italie" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Argentine Exterieur" data-price="5 000 FCFA" data-img="image/maillot _Argentine.png">
+                        <img src="image/maillot _Argentine.png" alt="Argentine" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Argentine Exterieur</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Argentine Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Argentine Domicile" data-price="5 000 FCFA" data-img="image/Maillot domicile _Argentine.png">
+                        <img src="image/Maillot domicile _Argentine.png" alt="Argentine Domicile" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Argentine Domicile</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Argentine Domicile" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Colombien" data-price="5 000 FCFA" data-img="image/maillot _colombie.png.png">
+                        <img src="image/maillot _colombie.png.png" alt="Colombie" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Colombien</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Colombien" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Mexique" data-price="5 000 FCFA" data-img="image/Maillot _Mexique.png">
+                        <img src="image/Maillot _Mexique.png" alt="Mexique" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Mexique</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Mexique" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Barça Exterieur" data-price="5 000 FCFA" data-img="image/Maillot Barça.png.png">
+                        <img src="image/Maillot Barça.png.png" alt="Barça Exterieur" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Barça Exterieur</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Barça Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Portugal Domicile" data-price="5 000 FCFA" data-img="image/maillot domicile _Portugal.png">
+                        <img src="image/maillot domicile _Portugal.png" alt="Portugal Domicile" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Portugal Domicile</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Portugal Domicile" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Portugal Exterieur" data-price="5 000 FCFA" data-img="image/Maillot_Portugal.png">
+                        <img src="image/Maillot_Portugal.png" alt="Portugal Exterieur" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Portugal Exterieur</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Portugal Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Brésil" data-price="5 000 FCFA" data-img="image/maillot Brésilien.png">
+                        <img src="image/maillot Brésilien.png" alt="Brésil" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Brésil</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Brésil" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Norvège" data-price="5 000 FCFA" data-img="image/maillot Norvège.png">
+                        <img src="image/maillot Norvège.png" alt="Norvège" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Norvège</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Norvège" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Liverpool" data-price="5 000 FCFA" data-img="image/Maillot Liverpool FC.png">
+                        <img src="image/Maillot Liverpool FC.png" alt="Liverpool" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Liverpool</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Liverpool" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Arsenal" data-price="5 000 FCFA" data-img="image/Maillot Arsenal.png">
+                        <img src="image/Maillot Arsenal.png" alt="Arsenal" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Arsenal</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Arsenal" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Ivoirien Exterieur" data-price="5 000 FCFA" data-img="image/maillot CI.png">
+                        <img src="image/maillot CI.png" alt="Ivoirien Exterieur" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Ivoirien Exterieur</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Ivoirien Exterieur" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot France" data-price="5 000 FCFA" data-img="image/maillot domicile _France.png">
+                        <img src="image/maillot domicile _France.png" alt="France" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot France</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot France" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Ivoirien Domicile" data-price="5 000 FCFA" data-img="image/maillot_CI.png">
+                        <img src="image/maillot_CI.png" alt="Ivoirien Domicile" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Ivoirien Domicile</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Ivoirien Domicile" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot All" data-price="5 000 FCFA" data-img="image/Maillot _All_Musuala.png">
+                        <img src="image/Maillot _All_Musuala.png" alt="All" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot All</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot All" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Suisse" data-price="5 000 FCFA" data-img="image/maillot Suisse.png">
+                        <img src="image/maillot Suisse.png" alt="Suisse" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Suisse</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Suisse" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot Belge" data-price="5 000 FCFA" data-img="image/Maillot _Belge.png">
+                        <img src="image/Maillot _Belge.png" alt="Belgique" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
+                        <div class="product-name">Maillot Belge</div>
+                        <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
+                        <button class="btn-order" data-name="Maillot Belge" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
+                    </div>
+
+                    <div class="product-card" data-name="Maillot PSG" data-price="5 000 FCFA" data-img="image/psg.jfif">
                         <img src="image/psg.jfif" alt="PSG" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-tshirt"></i></div>
-                        <div class="product-name">Maillot Parsien domicile</div>
+                        <div class="product-name">Maillot PSG</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Maillot PSG" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
@@ -994,67 +1166,76 @@
                     <span class="count">9 produits</span>
                 </div>
                 <div class="product-grid">
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SP" alt="Sandales Plates" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Sandales Plates Femme" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Plates">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Plates" alt="Sandales Plates" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Plates Femme</div>
                         <div class="product-price">8 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Sandales Plates Femme" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SC" alt="Sandales Compensées" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Sandales Compensées" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Compensées">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Compensées" alt="Sandales Compensées" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Compensées</div>
                         <div class="product-price">8 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Sandales Compensées" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SM" alt="Sandales Mode" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Sandales Mode" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Mode">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Mode" alt="Sandales Mode" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Mode</div>
                         <div class="product-price">8 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Sandales Mode" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=MF" alt="Mules Femme" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Mules Femme" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Mules+Femme">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Mules+Femme" alt="Mules Femme" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Mules Femme</div>
                         <div class="product-price">8 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Mules Femme" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=TC" alt="Tongs Chic" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Tongs Chic" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Tongs+Chic">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Tongs+Chic" alt="Tongs Chic" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Tongs Chic</div>
                         <div class="product-price">8 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Tongs Chic" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=SO" alt="Sandales Ouvertes" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Sandales Ouvertes" data-price="8 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Ouvertes">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Sandales+Ouvertes" alt="Sandales Ouvertes" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Sandales Ouvertes</div>
                         <div class="product-price">8 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Sandales Ouvertes" data-price="8 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=TA" alt="Talons Aiguilles" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Talons Aiguilles Soirée" data-price="18 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Talons+Aiguilles">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Talons+Aiguilles" alt="Talons Aiguilles" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Talons Aiguilles Soirée</div>
                         <div class="product-price">18 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Talons Aiguilles Soirée" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=EE" alt="Escarpins" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Escarpins Élégants" data-price="18 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Escarpins">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Escarpins" alt="Escarpins" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Escarpins Élégants</div>
                         <div class="product-price">18 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Escarpins Élégants" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/C41E3A/fff?text=TF" alt="Talons Fête" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Talons Fête Femme" data-price="18 000 FCFA" data-img="https://placehold.co/300x300/C41E3A/fff?text=Talons+Fête">
+                        <img src="https://placehold.co/300x300/C41E3A/fff?text=Talons+Fête" alt="Talons Fête" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-shoe-prints"></i></div>
                         <div class="product-name">Talons Fête Femme</div>
                         <div class="product-price">18 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Talons Fête Femme" data-price="18 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
@@ -1067,25 +1248,28 @@
                     <span class="count">3 produits</span>
                 </div>
                 <div class="product-grid">
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/6f42c1/fff?text=VH" alt="Voile Hijab" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Voile Hijab" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/6f42c1/fff?text=Voile+Hijab">
+                        <img src="https://placehold.co/300x300/6f42c1/fff?text=Voile+Hijab" alt="Voile Hijab" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
                         <div class="product-name">Voile Hijab</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Voile Hijab" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/6f42c1/fff?text=CF" alt="Chaussons Femme" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Chaussons Femme Musulmane" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/6f42c1/fff?text=Chaussons">
+                        <img src="https://placehold.co/300x300/6f42c1/fff?text=Chaussons" alt="Chaussons Femme" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
                         <div class="product-name">Chaussons Femme Musulmane</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Chaussons Femme Musulmane" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/6f42c1/fff?text=BE" alt="Babouches" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Babouches Élégantes" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/6f42c1/fff?text=Babouches">
+                        <img src="https://placehold.co/300x300/6f42c1/fff?text=Babouches" alt="Babouches" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-headscarf"></i></div>
                         <div class="product-name">Babouches Élégantes</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Babouches Élégantes" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
@@ -1098,53 +1282,60 @@
                     <span class="count">7 produits</span>
                 </div>
                 <div class="product-grid">
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/f39c12/fff?text=SM" alt="Sacs à Main" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Sacs à Main Tendance" data-price="15 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Sacs+à+Main">
+                        <img src="https://placehold.co/300x300/f39c12/fff?text=Sacs+à+Main" alt="Sacs à Main" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
                         <div class="product-name">Sacs à Main Tendance</div>
                         <div class="product-price">15 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Sacs à Main Tendance" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/f39c12/fff?text=SB" alt="Sacs Bandoulière" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Sacs Bandoulière" data-price="15 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Bandoulière">
+                        <img src="https://placehold.co/300x300/f39c12/fff?text=Bandoulière" alt="Sacs Bandoulière" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
                         <div class="product-name">Sacs Bandoulière</div>
                         <div class="product-price">15 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Sacs Bandoulière" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/f39c12/fff?text=SC" alt="Sacs Chic" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Sacs Chic Femme" data-price="15 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Sacs+Chic">
+                        <img src="https://placehold.co/300x300/f39c12/fff?text=Sacs+Chic" alt="Sacs Chic" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-bag-shopping"></i></div>
                         <div class="product-name">Sacs Chic Femme</div>
                         <div class="product-price">15 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Sacs Chic Femme" data-price="15 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/f39c12/fff?text=PF" alt="Portefeuilles" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Portefeuilles Femme" data-price="7 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Portefeuilles">
+                        <img src="https://placehold.co/300x300/f39c12/fff?text=Portefeuilles" alt="Portefeuilles" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-wallet"></i></div>
                         <div class="product-name">Portefeuilles Femme</div>
                         <div class="product-price">7 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Portefeuilles Femme" data-price="7 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/f39c12/fff?text=CF" alt="Ceintures" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Ceintures Femme" data-price="4 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Ceintures">
+                        <img src="https://placehold.co/300x300/f39c12/fff?text=Ceintures" alt="Ceintures" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-belt"></i></div>
                         <div class="product-name">Ceintures Femme</div>
                         <div class="product-price">4 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Ceintures Femme" data-price="4 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/f39c12/fff?text=LS" alt="Lunettes" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Lunettes de Soleil" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Lunettes">
+                        <img src="https://placehold.co/300x300/f39c12/fff?text=Lunettes" alt="Lunettes" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-glasses"></i></div>
                         <div class="product-name">Lunettes de Soleil</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Lunettes de Soleil" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
-                    <div class="product-card">
-                        <img src="https://placehold.co/80x80/f39c12/fff?text=BF" alt="Bijoux" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="product-card" data-name="Bijoux Fantaisie" data-price="5 000 FCFA" data-img="https://placehold.co/300x300/f39c12/fff?text=Bijoux">
+                        <img src="https://placehold.co/300x300/f39c12/fff?text=Bijoux" alt="Bijoux" class="product-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="product-icon" style="display:none;"><i class="fas fa-gem"></i></div>
                         <div class="product-name">Bijoux Fantaisie</div>
                         <div class="product-price">5 000 FCFA</div>
+                        <span class="click-hint"></span>
                         <button class="btn-order" data-name="Bijoux Fantaisie" data-price="5 000 FCFA"><i class="fab fa-whatsapp"></i> Commander</button>
                     </div>
                 </div>
@@ -1192,7 +1383,7 @@
         &copy; 2026 Tous droits réservés
     </footer>
 
-    <!-- ===== WHATSAPP FLOTTANT (sans badge) ===== -->
+    <!-- ===== WHATSAPP FLOTTANT ===== -->
     <a href="https://wa.me/22605536078?text=Bonjour%20BARAKA%20MARKET%2C%20j%27ai%20une%20question" 
        class="whatsapp-float" 
        target="_blank" 
@@ -1200,6 +1391,20 @@
        aria-label="Nous contacter sur WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
+
+    <!-- ===== MODAL / ZOOM PRODUIT ===== -->
+    <div class="modal-overlay" id="productModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <img src="" alt="Produit" class="modal-image" id="modalImage">
+            <div class="modal-divider"></div>
+            <div class="modal-name" id="modalName">Nom du produit</div>
+            <div class="modal-price" id="modalPrice">0 FCFA</div>
+            <button class="modal-btn-order" id="modalOrderBtn">
+                <i class="fab fa-whatsapp"></i> Commander maintenant
+            </button>
+        </div>
+    </div>
 
     <!-- ===== JAVASCRIPT ===== -->
     <script>
@@ -1232,7 +1437,6 @@
                 if (e.key === 'Escape') closeMenu();
             });
 
-            // Navigation depuis le menu
             document.querySelectorAll('.sidebar-nav a[data-filter]').forEach(function(link) {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
@@ -1335,7 +1539,71 @@
                 });
             });
 
-            // ---------- BOUTONS COMMANDER (WhatsApp) ----------
+            // ---------- MODAL / ZOOM PRODUIT ----------
+            const modal = document.getElementById('productModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalName = document.getElementById('modalName');
+            const modalPrice = document.getElementById('modalPrice');
+            const modalOrderBtn = document.getElementById('modalOrderBtn');
+            const modalClose = document.getElementById('modalClose');
+
+            let currentProductData = {};
+
+            function openModal(productData) {
+                currentProductData = productData;
+                modalImage.src = productData.img;
+                modalImage.alt = productData.name;
+                modalName.textContent = productData.name;
+                modalPrice.textContent = productData.price;
+                modalOrderBtn.dataset.name = productData.name;
+                modalOrderBtn.dataset.price = productData.price;
+                
+                modal.classList.add('active');
+                document.body.classList.add('modal-open');
+            }
+
+            function closeModal() {
+                modal.classList.remove('active');
+                document.body.classList.remove('modal-open');
+            }
+
+            // Cliquer sur une carte produit
+            document.querySelectorAll('.product-card').forEach(function(card) {
+                card.addEventListener('click', function(e) {
+                    // Éviter de déclencher si on clique sur le bouton commander
+                    if (e.target.closest('.btn-order')) return;
+                    
+                    const data = {
+                        name: this.dataset.name || this.querySelector('.product-name').textContent,
+                        price: this.dataset.price || this.querySelector('.product-price').textContent,
+                        img: this.dataset.img || this.querySelector('.product-image').src
+                    };
+                    openModal(data);
+                });
+            });
+
+            // Fermer la modal
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) closeModal();
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') closeModal();
+            });
+
+            // Bouton commander dans la modal
+            modalOrderBtn.addEventListener('click', function(e) {
+                const name = this.dataset.name;
+                const price = this.dataset.price;
+                const phone = '22605536078';
+                const message = 'Bonjour BARAKA MARKET, je souhaite commander ' + name + ' au prix de ' + price;
+                const url = 'https://wa.me/' + phone + '?text=' + encodeURIComponent(message);
+                window.open(url, '_blank');
+                closeModal();
+            });
+
+            // ---------- BOUTONS COMMANDER (dans les cartes) ----------
             const orderBtns = document.querySelectorAll('.btn-order');
 
             orderBtns.forEach(function(btn) {
